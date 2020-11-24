@@ -70,6 +70,7 @@ export default class TradingViewWidget extends PureComponent {
     no_referral_id: PropTypes.bool,
     popup_height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     popup_width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    postMessageGet: PropTypes.func,
     range: PropTypes.oneOf([
       '1d',
       '5d',
@@ -183,6 +184,10 @@ export default class TradingViewWidget extends PureComponent {
     };
   };
 
+  postMessageGet = (message) => {
+    return this.tradingView.postMessage.get(message);
+  };
+
   initWidget = () => {
     /* global TradingView */
     if (typeof TradingView === 'undefined' || !document.getElementById(this.containerId)) return;
@@ -208,7 +213,8 @@ export default class TradingViewWidget extends PureComponent {
     }
 
     /* global TradingView */
-    new TradingView[widgetType](config);
+    this.tradingView = new TradingView[widgetType](config);
+
   };
 
   cleanWidget = () => {
